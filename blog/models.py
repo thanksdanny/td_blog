@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+# from django.utils.six import python_2_unicode_compatible
 
 
 class Category(models.Model):
@@ -69,6 +71,9 @@ class Post(models.Model):
     # 引用是找不到objects，下面的链接里其中有个评论也有同样问题
     # 给出了解决办法就是加这样代码
     objects = models.Manager()
+
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
